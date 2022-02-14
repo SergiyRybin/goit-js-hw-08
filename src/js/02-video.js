@@ -1,15 +1,17 @@
 import Player from '@vimeo/player';
+var _ = require('lodash');
 
 const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
 
 const localKey = "videoplayer-current-time";
 
-player.on('timeupdate', saveValue);
+player.on('timeupdate', _.throttle(saveValue, 1000));
 
 function saveValue(event){
-localStorage.setItem(localKey, JSON.stringify(event.seconds))}
-
+    console.log(event)
+localStorage.setItem(localKey, JSON.stringify(event.seconds))
+}
 
 
 player.setCurrentTime(localStorage.getItem(localKey)).then(function(seconds) {
