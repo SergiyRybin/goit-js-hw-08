@@ -3,13 +3,22 @@ import Player from '@vimeo/player';
 const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
 
-player.on('timeupdate', function(event) {
+const localKey = "videoplayer-current-time";
+
+player.on('timeupdate', saveValue);
+
+function saveValue(event){
+localStorage.setItem(localKey, JSON.stringify(event.seconds))}
 
 
-console.log(event.seconds)
-    });
 
-    // player.getVideoTitle().then(function(title) {
-    //     console.log('title:', title);
-    // });
-    // "videoplayer-current-time"
+player.setCurrentTime(localStorage.getItem(localKey)).then(function(seconds) {
+}).catch(function(error) {
+    switch (error.name) {
+        case 'RangeError':
+            break;
+        default:
+            break;
+    }
+});
+
