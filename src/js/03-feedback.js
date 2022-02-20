@@ -5,7 +5,7 @@ const textArea = document.querySelector(".feedback-form textarea")
 const emailData = document.querySelector(".feedback-form input")
 const LOCAL_KEY = "feedback-form-state";
 
-
+console.log((emailData))
 const formData = {};
 
 feedbackFormEmail.addEventListener("input", throttle(onText, 500))
@@ -31,9 +31,8 @@ localStorage.removeItem(LOCAL_KEY)
 function saveData(){
     const saveMessage = JSON.parse(localStorage.getItem(LOCAL_KEY))
     if(saveMessage){
-        emailData.value = saveMessage.email
-        textArea.value = saveMessage.message
-
+        emailData.value = saveMessage.email || "";
+        textArea.textContent = saveMessage.message || "";
     } 
 }
 saveData()
